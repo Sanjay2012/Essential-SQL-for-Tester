@@ -1,0 +1,288 @@
+Session-3
+===============
+
+Sprint=15 days
+First 2-3 days==> Analysis of the test cases 
+ & then writing the tC
+
+-- setup a tc review meeting Dev + BA
+-- Approve 
+
+21-27 story points
+1 story point= 7-8 hrs
+
+
+
+7*27*7
+
+6-8 stories
+4- front    ==== Functional  (12-15 test cases= 15*4=60)
+             1) Test case writing and Analysis      (4 hrs)
+	     2) Test case execution and Evidence criation   (4 hrs)
+4- banckend ==== API testing  (4*4=16)
+
+================================================================
+Srum master-- coordinate all activity
+BA/ Product --- Tech person
+
+
+================================================
+Integrity Constraints
+======================
+- specify the rules for data in a table
+- CREATE TABLE, ALTER TABLE
+- Data type: Numeric, String, Date
+
+CREATE TABLE demo(srNO  )
+
+NULL=0  ===> wrong 
+
+1) NOT NULL  --> Esure that the column value cannot be NULL
+2) UNIQUE    --> Ensure that each value in column is different
+
+NOT NULL UNIQUE
+
+3) PRIMARY KEY --->  NOT NULL + UNIQUE
+===========================================
+- For a single table there is one PRIMARY KEY
+- Composite KEY
+
+
+Create database College;
+use College;
+
+drop database college;
+drop table profile;
+drop table Dept;
+
+CREATE TABLE Profile(
+id int NOT NULL,
+name varchar(50),
+location varchar(50),
+age int,
+PRIMARY KEY(id));
+
+CREATE TABLE Profile(
+id int primary KEY,
+name varchar(50),
+location varchar(50),
+age int
+);
+
+-- one calumn have more than one constarints
+
+describe profile;
+select * from profile;
+delete from profile where id is null;
+
+insert into profile values(1, "Ajit", "Pune", 12);
+insert into profile values(2, "sachin", "mumbai", 15);
+insert into profile values(3, "Ashish", "Chennai", 18);
+insert into profile values(4, "Atul", "Kolkata", 16);
+insert into profile values(5, "Shiv", "Dehli", 14);
+insert into profile values(1, "Shivani", "Kanpur", 15);-- duplicate id
+
+select * from profile;
++----+--------+----------+------+
+| id | name   | location | age  |
++----+--------+----------+------+
+|  1 | Ajit   | Pune     |   12 |
+|  2 | sachin | mumbai   |   15 |
+|  3 | Ashish | Chennai  |   18 |
+|  4 | Atul   | Kolkata  |   16 |
+|  5 | Shiv   | Dehli    |   14 |
++----+--------+----------+------+
+5 rows in set (0.00 sec)
+
+mysql> insert into profile values(1, "Shivani", "Mumbai", 15);
+ERROR 1062 (23000): Duplicate entry '1' for key 'profile.PRIMARY'
+mysql> insert into profile values(NULL, "Shivani", "Mumbai", 15);
+ERROR 1048 (23000): Column 'id' cannot be null
+mysql> -- PRimary Key==> UNIQUE and NOT NULL
+
+=========================================================
+
+4) Foreign Key -->  join the tables according to primary key
+-------------------------------------------------------------------
+
+
+CREATE TABLE Dept(
+id int ,
+LibraryId int,
+Dept varchar(50) ,
+Perct float,
+FOREIGN KEY(id) 
+REFERENCES profile(id) on update cascade on delete cascade
+);
+
+describe Dept;
+select * from Dept; -- child
+select * from Profile;  -- parent
+
+select id from profile union All Select id from Dept;
+
+insert into Dept values (1, 112, "Lotus", 80.89 ), 
+						(2, 221, "Tiger", 95.28 ), 
+                        (3, 150, "Pink", 96.89 ), 
+                        (4, 421, "RED", 98.88 ), 
+                        (5, 602, "Yello", 98.25 );
+insert into dept values(11, 999, "Green", 99.00);
+===============================================================
+
+
+5) Check --> Age>18, City= "HYD","MUM", "PUN", "CHE"
+
+
+
+6) Default ---> used to insert default value into db
+
+
+
+
+
+===========================================
+
+Create database College;
+use College;
+
+drop database college;
+drop table profile;
+drop table Dept;
+
+-- PARENT TABLE 
+
+CREATE TABLE Profile(
+id int NOT NULL,
+name varchar(50),
+location varchar(50),
+age int,
+PRIMARY KEY(id));
+
+CREATE TABLE Profile(
+id int primary KEY,
+name varchar(50),
+location varchar(50),
+age int
+);
+
+-- one calumn have more than one constarints
+
+describe profile;
+select * from profile;
+delete from profile where id is null;
+
+insert into profile values(1, "Ajit", "Pune", 12);
+insert into profile values(2, "sachin", "mumbai", 15);
+insert into profile values(3, "Ashish", "Chennai", 18);
+insert into profile values(4, "Atul", "Kolkata", 16);
+insert into profile values(5, "Shiv", "Dehli", 14);
+insert into profile values(1, "Shivani", "Kanpur", 15);-- duplicate id
+
+update Dept set name="Ajit" where id=1;
+update Dept set name="sachin" where id=2;
+update Dept set name="Ashish" where id=3;
+update Dept set name="Atul" where id=4;
+update Dept set name="Shiv" where id=5;
+
+CREATE TABLE Profile(
+id int NOT NULL,
+name varchar(50),
+location varchar(50),
+age int,
+PRIMARY KEY(id));
+-- CHILD TABLE
+
+CREATE TABLE Dept(
+id int ,
+LibraryId int,
+Dept varchar(50) ,
+Perct float,
+FOREIGN KEY(id) 
+REFERENCES profile(id) on update cascade on delete cascade
+);
+
+describe Dept;
+select * from Dept; -- child
+select * from Profile;  -- parent
+
+select id from profile union All Select id from Dept;
+
+insert into Dept values (1, 112, "Lotus", 80.89 ), 
+						(2, 221, "Tiger", 95.28 ), 
+                        (3, 150, "Pink", 96.89 ), 
+                        (4, 421, "RED", 98.88 ), 
+                        (5, 602, "Yello", 98.25 );
+insert into dept values(11, 999, "Green", 99.00);
+
+SET SQL_safe_updates=0;
+delete from profile where id=11;
+
+
+-- CHECK CONSTRAINT
+
+CREATE TABLE Check1(
+sid int  ,
+sname varchar(10),
+Marks int check(Marks Between 45 AND 100));
+
+insert into check1 values(521, "Suraj", 65);
+
+
+
+
+-- CHECK CONSTRAINT, AUTO INCREMENT
+
+Create table student1(
+SID TINYINT unsigned NOT NULL auto_increment primary KEY,
+SNAME varchar(10),
+Age tinyint check(Age >=18)
+);
+
+insert into student1 (SNAME, Age) values("ASHISH", 32);
+
+insert into student1 (SNAME, Age) values("JAYESH", 35);
+select * from student1;
+
+
+
+
+
+-- DEFAULT constraint
+
+drop table student2;
+Create table Info(
+SrNo int unsigned auto_increment primary KEY,
+SNAME varchar(10),
+Age tinyint check(Age >=18),
+City varchar(10) default 'PUNE' );
+
+insert into Info (SNAME, Age) values("ASHISH", 32);
+insert into Info (SNAME, Age) values("JAYESH", 35);
+insert into Info (SNAME, Age, City) values("JAYESH", 20, "Mumbai");
+
+select * from Info;
+
+drop table default1;
+
+CREATE TABLE Default1(
+Id int unsigned auto_increment primary KEY ,
+OrderName varchar(10),
+OrderDate datetime default NOW()); 
+
+insert into Default1 (OrderName) values("Pizaa");
+
+select * from default1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

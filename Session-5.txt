@@ -1,0 +1,55 @@
+Session-5
+===========================
+Agenda
+=============
+1) WHERE (Filtering the data based on condition)
+2) OPerators
+
+=========================
+
+## WHERE clause ##
+- select
+- SELECT *  ==> * it will retrive all the rows present in table (along with column)
+- SELECT Fname from profile;
+- e.g retrive the data from db related to * whose age> 28  years
+- used for selecting the rows based on condition
+- Filtering row using "WHERE" condition
+
+- Write a query which select the data from country table whose inde year is after 1930
+
+ SELECT * FROM country where IndepYear > 1930;
+ SELECT * from country where Continent="Asia";
+ select Name from country where IndepYear is null;
+=====================================
+## Logical operation
+- AND, OR, NOT
+- AND==> if all conditions are true ===> then only it will retrive the data/row from the table
+- OR==> atleast one condition is fullfilled===> show the respective rows from db
+- NOT==> apart from that condition
+1) retrive the the countries whose  lifeexpe < 70 , belongs to Asia
+
+select * from  country;
+select name from country where Continent= "Asia" AND LifeExpectancy <60;
+select name from country where Continent= "Asia" OR SurfaceArea <200;
+select name from country where NOT Population=307000;
+==================================================
+## Between / NOT BETWEEN
+   IN / NOT IN
+-- use logical operator
+Between==> belongs to range of values
+IN===> (25, 45, 56, 89) ===> return the rows when the values are maching in a list
+ 1) LE==> between 50 to 60
+select name from country where LifeExpectancy BETWEEN 50 AND 60; ===> 
+select name from country where LifeExpectancy NOT BETWEEN 50 AND 60;  ===> <50 and >60
+
+select name from country where Population IN (103000,8190900,65000);
+========================================================
+
+1) Manual concepts
+2) SQL cocepts
+3) API testing
+4) UNIX for tester ---> logs 
+
+5) JAVA concepts-- OOPS
+6) Selenium -- webdriver, Framework-- BDD, JUNIT, TESTNG, Hybrid
+7) Git + Github --

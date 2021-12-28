@@ -1,0 +1,123 @@
+Session-8
+==========================
+Constarints
+
+- Constraints in SQL help us to manage the data and avoid any invalid transactions on it.
+- The primary key is limited to a single table and is put to uniquely identify the corresponding rows of a table.
+- When we talk about Foreign key, we can have as many Foreign keys as we want. 
+- A foreign key comes to use when we need to link tables to one another and have data spread over multiple tables.
+
+
+What is a Primary Key in SQL?
+==============================
+- A Primary key is a unique column we set in a table to easily identify and locate data in queries. 
+- A table can have only one primary key.
+- The primary key column has a unique value and doesn’t store repeating values. 
+- A Primary key can never take NULL values.
+
+- For example, in the case of a student when identification needs to be done in the class, 
+   the roll number of the student plays the role of Primary key.
+- Similarly, when we talk about employees in a company, the employee ID is functioning 
+   as the Primary key for identification.
+
+Let us now understand the Syntax of creating the table with the Primary key specified.
+
+# Syntax:
+
+CREATE TABLE tableName (
+    col1 int PRIMARY KEY
+    col2 varchar(50) NOT NULL,
+    col3 int,
+
+);
+
+
+# Creatting Parent table for Employee
+
+CREATE TABLE Profile(
+id int PRIMARY KEY
+name varchar(50),
+location varchar(50),
+age int);
+
+
+CREATE TABLE Profile(
+id int NOT NULL,
+name varchar(50),
+location varchar(50),
+age int
+ PRIMARY KEY (id));
+
+-------------------------------------
+
+Create database College;
+use College;
+
+CREATE TABLE Profile(
+id int PRIMARY KEY,
+name varchar(50),
+location varchar(50),
+age int
+);
+
+select * from profile;
+delete from profile where id is null;
+
+insert into profile values(1, "Ajit", "Pune", 12);
+insert into profile values(2, "sachin", "mumbai", 15);
+insert into profile values(3, "Ashish", "Chennai", 18);
+insert into profile values(4, "Atul", "Kolkata", 16);
+insert into profile values(5, "Shiv", "Dehli", 14);
+
+=========================================================
+
+## What is a Foreign key in SQL?
+- A Foreign key is beneficial when we connect two or more tables so that data from both can be put to use parallelly.
+- A foreign key is a field or collection of fields in a table that refers to the Primary key of the other table. 
+- It is responsible for managing the relationship between the tables.
+- The table which contains the foreign key is often called the child table, 
+   and the table whose primary key is being referred by the foreign key is called the Parent Table.
+
+- For example: 
+- When we talk about students and the courses they have enrolled in
+- now if we try to store all the data in a single table, the problem of redundancy arises.
+- To solve this table, we make two tables, one the student detail (Profile) table and the other department table. 
+
+Parent table- Profile
+Child Table- Department
+
+- In the student table, we store the details of students and the courses they have enrolled in.
+- And in the department table, we store all the details of the department. 
+- Here the courseId acts as the Primary key for the department table whereas 
+   it acts as the Foreign key in the student table.
+
+Let us now look at the syntax of creating a table with a foreign key.
+
+
+Syntax:
+
+CREATE TABLE childTable (
+    col1 int FOREIGN KEY REFERENCES parentTable(parent_Primary_key),
+    col2 int NOT NULL,
+    col3 int PRIMARY KEY,
+
+    
+);
+
+
+
+CREATE TABLE childTable (
+    col1 int NOT NULL,
+    col2 int NOT NULL,
+    col3 int,
+    ………...
+    PRIMARY KEY (col1),
+    FOREIGN KEY (col3) REFERENCES parentTable(parent_Primary_key)
+);
+
+
+
+
+
+
+

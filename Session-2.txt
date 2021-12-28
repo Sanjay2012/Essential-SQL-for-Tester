@@ -1,0 +1,56 @@
+Session-2
+======================
+1) Download and Install MySQL Server
+2) How many ways we can Work with MySQL server
+3) Create database/ schema
+4) Create table
+5) Insert data into table
+6) select/retrive the data from table
+================
+database: fact which is recored-- text, image etc.
+
+Client- Programming interface--manupulation/ CURD==>
+C= Create
+U= UPDATE
+R= Retrival
+D= Delete
+
+GUI- MySQL Workbench
+CLI- 1) Command Line Interface
+     2) MySQL Shell
+     3) CMD
+
+Server- The area where we can store all data related software
+==========================================
+1) https://dev.mysql.com/downloads/mysql/
+
+2) Connecting to MySQL with different options:
+// Local
+
+ A) GUI: Workbench
+ B) CLI:
+    1) Command Line Client:
+      - Password
+      - show databases;
+      - use <<Nameof DB>>
+      - Now perform CURD operations
+
+     2) Connect MySQL using window CMD
+       - open cmd
+       - Go to bin folder of MySQl-- cmd
+       - > mysql -u <username> -p
+         > password: ***
+         > show databases;
+         > use <<Nameof DB>>
+      - Now perform CURD operations
+
+      3) MySQL Shell
+      -  Open MySql Shell
+      - switch to sql--- \sql
+      - show databases;
+       > use <<Nameof DB>>
+      - Now perform CURD operations
+
+3) remote --- Putty -- Linux
+
+       

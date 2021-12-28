@@ -1,0 +1,177 @@
+Session-6
+======================
+1) Distinct
+2) Order By
+3) Built in functions==> SELECT command == clause
+
+===> Tell me the execution sequence of cluases used in MySQL
+
+	SELECT DISTINCT <Top_Specification> <Select_List>
+	From <Left_Table>
+	<join_Type> JOIN <right_Table>
+	ON <join_condition>
+	WHERE <Where_condition>
+	GROUP BY <gropu_by_List>
+	HAVING <having_condition>
+	ORDER BY <order_by_List>
+========================
+
+SELECT * from <Table Name>;
+DISTINCT===> Unique value from particular Table
+
+Syntax:
+
+SELECT DISTINCT <COLUMN NAME> from <TABLE NAME>;
+
+select distinct ( Continent) from country;
++---------------+
+| Continent     |
++---------------+
+| North America |
+| Asia          |
+| Africa        |
+| Europe        |
+| South America |
+| Oceania       |
+| Antarctica    |
++---------------+
+===============================
+** Order By
+==> used to make a order of a data in Asce/ Desc order , from the selected column
+- By default order is Ascending
+- DESC
+
+Syntax
+------
+Ascending
+Select * from <Table Name> order by FirstName  // ASCE
+
+
+Select * from <Table Name> order by FirstNam DESC;
+
+select * from Country order by Name DESC;
+
+select Name from Country order by Population limit 5;
++-----------------------------------+
+| Name                              |
++-----------------------------------+
+| French Southern territories       |
+| Antarctica                        |
+| British Indian Ocean Territory    |
+| Bouvet Island                     |
+| Heard Island and McDonald Islands |
++-----------------------------------+
+
+select Name from Country order by Population desc limit 5;
++---------------+
+| Name          |
++---------------+
+| China         |
+| India         |
+| United States |
+| Indonesia     |
+| Brazil        |
++---------------+
+
+select code, Name, Continent,Capital,  IndepYear, Population, LifeExpectancy from Country order by Name  desc limit 5;
++------+----------------+-----------+---------+-----------+------------+----------------+
+| code | Name           | Continent | Capital | IndepYear | Population | LifeExpectancy |
++------+----------------+-----------+---------+-----------+------------+----------------+
+| ZWE  | Zimbabwe       | Africa    |    4068 |      1980 |   11669000 |           37.8 |
+| ZMB  | Zambia         | Africa    |    3162 |      1964 |    9169000 |           37.2 |
+| YUG  | Yugoslavia     | Europe    |    1792 |      1918 |   10640000 |           72.4 |
+| YEM  | Yemen          | Asia      |    1780 |      1918 |   18112000 |           59.8 |
+| ESH  | Western Sahara | Africa    |    2453 |      NULL |     293000 |           49.8 |
++------+----------------+-----------+---------+-----------+------------+----------------+
+
+select code, Name, Continent,Capital,  IndepYear, Population, LifeExpectancy from Country order by Name limit 5;
++------+----------------+-----------+---------+-----------+------------+----------------+
+| code | Name           | Continent | Capital | IndepYear | Population | LifeExpectancy |
++------+----------------+-----------+---------+-----------+------------+----------------+
+| AFG  | Afghanistan    | Asia      |       1 |      1919 |   22720000 |           45.9 |
+| ALB  | Albania        | Europe    |      34 |      1912 |    3401200 |           71.6 |
+| DZA  | Algeria        | Africa    |      35 |      1962 |   31471000 |           69.7 |
+| ASM  | American Samoa | Oceania   |      54 |      NULL |      68000 |           75.1 |
+| AND  | Andorra        | Europe    |      55 |      1278 |      78000 |           83.5 |
++------+----------------+-----------+---------+-----------+------------+----------------+
+===================================================
+Agreegate Functions
+============
+
+Operate on all data types and procedure summarized result set
+
+CREATE TABLE employee(name varchar(45) NOT NULL, occupation varchar(35) NOT NULL, working_date date, working_hours varchar(10));
+
+MIN()===>
+	SELECT MIN(Column_Name) FROM <table_Name>;
+select min(Population) from Country;
++-----------------+
+| min(Population) |
++-----------------+
+|               0 |
++-----------------+
+
+
+
+MAX()
+	SELECT MAX(Column_Name) FROM <table_Name>;
+select max(Population) as MAXPOP from Country order by Name;
++------------+
+| MAXPOP     |
++------------+
+| 1277558000 |
++------------+
+
+***COUNT()
+	SELECT COUNT(Column_Name) FROM <table_Name>;
+	select count(name) AS "ENAME" from employee;
+	select count(name)  from employee;
+	
+	SELECT count(FN) as COUNTOFEMP from employee;
+	
+	select count(Continent) as Continent_Count from Country;
+
+ select count(distinct ( Continent)) as No_Of_Continents from country;
++------------------+
+| No_Of_Continents |
++------------------+
+|                7 |
++------------------+
+
+ALIAS:--->USE to change column/ table name temp
+
+
+AVG()
+	SELECT AVG(Column_Name) FROM <table_Name>;
+
+select avg(Population) as AVG_POPU from Country;
++---------------+
+| AVG_POPU      |
++---------------+
+| 25434098.1172 |
++---------------+
+
+SUM()
+	SELECT SUM(Column_Name) FROM <table_Name>;
+select sum(Population) as WORLD_POP from Country;
++------------+
+| WORLD_POP  |
++------------+
+| 6078749450 |
++------------+
+===============================================
+Note: Some of the commands will be changes as per db
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

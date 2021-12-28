@@ -1,0 +1,374 @@
+Session-7
+======================
+Group By
+Having
+Order by
+
+=======================
+
+===================================
+Group By --- Clause
+===========
+- Group the result from the table and display
+- Group By Clause groups records into Summery Rows
+- Group one or more than one column
+- The GROUP BY statement used with agreegate function-- count(), AVG(), SUM(), MAX(), MIN()
+
+Note: All the col in SELECT list should be include in GROUP BY Clause
+
+# SYNTAX
+
+SELECT <Col1>,<col2>, aggFun(col3) FROM <table_name> GROUP BY <Col1>,<col2>;
+
+---------------------------------------------------------------------------------
+- Here we used "World" database
+> Use World;
+> describe country;
++----------------+---------------------------------------------------------------------------------------+------+-----+---------+-------+
+| Field          | Type                                                                                  | Null | Key | Default | Extra |
++----------------+---------------------------------------------------------------------------------------+------+-----+---------+-------+
+| Code           | char(3)                                                                               | NO   | PRI |         |       |
+| Name           | char(52)                                                                              | NO   |     |         |       |
+| Continent      | enum('Asia','Europe','North America','Africa','Oceania','Antarctica','South America') | NO   |     | Asia    |       |
+| Region         | char(26)                                                                              | NO   |     |         |       |
+| SurfaceArea    | float(10,2)                                                                           | NO   |     | 0.00    |       |
+| IndepYear      | smallint                                                                              | YES  |     | NULL    |       |
+| Population     | int                                                                                   | NO   |     | 0       |       |
+| LifeExpectancy | float(3,1)                                                                            | YES  |     | NULL    |       |
+| GNP            | float(10,2)                                                                           | YES  |     | NULL    |       |
+| GNPOld         | float(10,2)                                                                           | YES  |     | NULL    |       |
+| LocalName      | char(45)                                                                              | NO   |     |         |       |
+| GovernmentForm | char(45)                                                                              | NO   |     |         |       |
+| HeadOfState    | char(60)                                                                              | YES  |     | NULL    |       |
+| Capital        | int                                                                                   | YES  |     | NULL    |       |
+| Code2          | char(2)                                                                               | NO   |     |         |       |
++----------------+---------------------------------------------------------------------------------------+------+-----+---------+-------+
+
+
+1. Write a query to fetch the total population continentwise
+--> SUM, Col1==> Continent
+    	 Col2==> Population
+
+SELECT Continent, SUM(Population) AS TotalPop from Country group by Continent;
++---------------+------------+
+| Continent     | TotalPop   |
++---------------+------------+
+| North America |  482993000 |
+| Asia          | 3705025700 |
+| Africa        |  784475000 |
+| Europe        |  730074600 |
+| South America |  345780000 |
+| Oceania       |   30401150 |
+| Antarctica    |          0 |
++---------------+------------+
+
+2. Write a query to fetch the country count under each continent;
+
+==> Aggegate--> count
+==> Col==> Continent, Count(*)
+
+SELECT Continent, count(*) from country group by Continent;
+
++---------------+----------+
+| Continent     | count(*) |
++---------------+----------+
+| North America |       37 |
+| Asia          |       51 |
+| Africa        |       58 |
+| Europe        |       46 |
+| South America |       14 |
+| Oceania       |       28 |
+| Antarctica    |        5 |
++---------------+----------+
+
+3. query to fetch the Avg lifeExpectancy continentwise
+SELECT Continent, AVG(LifeExpectancy) from country group by Continent;
++---------------+---------------------+
+| Continent     | AVG(LifeExpectancy) |
++---------------+---------------------+
+| North America |            72.99189 |
+| Asia          |            67.44118 |
+| Africa        |            52.57193 |
+| Europe        |            75.14773 |
+| South America |            70.94615 |
+| Oceania       |            69.71500 |
+| Antarctica    |                NULL |
++---------------+---------------------+
+
+4. Write a query to fetch max, min, sum,avg population of countinents
+
+SELECT Continent, MAX(Population), min(Population), AVG(Population),SUM(Population)  from Country group by Continent;
++---------------+-----------------+-----------------+-----------------+-----------------+
+| Continent     | MAX(Population) | min(Population) | AVG(Population) | SUM(Population) |
++---------------+-----------------+-----------------+-----------------+-----------------+
+| North America |       278357000 |            7000 |   13053864.8649 |       482993000 |
+| Asia          |      1277558000 |          286000 |   72647562.7451 |      3705025700 |
+| Africa        |       111506000 |               0 |   13525431.0345 |       784475000 |
+| Europe        |       146934000 |            1000 |   15871186.9565 |       730074600 |
+| South America |       170115000 |            2000 |   24698571.4286 |       345780000 |
+| Oceania       |        18886000 |               0 |    1085755.3571 |        30401150 |
+| Antarctica    |               0 |               0 |          0.0000 |               0 |
++---------------+-----------------+-----------------+-----------------+-----------------+
+
+5. Write a query that fetch the total population and contry count in continent
+
+select continent, sum(Population), Count(Name) from country group by continent;
++---------------+-----------------+-------------+
+| continent     | sum(Population) | Count(Name) |
++---------------+-----------------+-------------+
+| North America |       482993000 |          37 |
+| Asia          |      3705025700 |          51 |
+| Africa        |       784475000 |          58 |
+| Europe        |       730074600 |          46 |
+| South America |       345780000 |          14 |
+| Oceania       |        30401150 |          28 |
+| Antarctica    |               0 |           5 |
++---------------+-----------------+-------------+
+
+
+================================================================
+
+### Having --Clause
+- Where--> Having Filter the data from table
+- Where keyword canot be used with agreegate function (on top of GROUP By clause )
+- Means We cannot use like this
+SELECT Continent, Count(Population) from Country Where Count(Population)>800000;
+ERROR 1111 (HY000): Invalid use of group function
+
+-Here Count(Population) --- is aggregate function
+- Having is always used on top op GROUP By clause
+
+# SYNTAX
+
+SELECT <Col1>,<col2>, aggFun(col3) FROM <table_name> GROUP BY <Col1>,<col2>; HAVING <condition>
+
+------------------------------------------------------------------------------
+1. Write a query to fetch the continent having the country count greater than 20;
+
+SELECT Continent, count(*) from country group by Continent Having  count(*)>20;
++---------------+----------+
+| Continent     | count(*) |
++---------------+----------+
+| North America |       37 |
+| Asia          |       51 |
+| Africa        |       58 |
+| Europe        |       46 |
+| Oceania       |       28 |
++---------------+----------+
+
+2. Write a query to fetch the continent having avg LifeExpectancy > 69 years
+
+SELECT Continent, AVG(LifeExpectancy) from Country group by continent Having AVG(LifeExpectancy)>69;
++---------------+---------------------+
+| Continent     | AVG(LifeExpectancy) |
++---------------+---------------------+
+| North America |            72.99189 |
+| Europe        |            75.14773 |
+| South America |            70.94615 |
+| Oceania       |            69.71500 |
++---------------+---------------------+
+
+3. Write a query to fetch the continent having population > 800000000
+SELECT Continent, sum(Population) from Country group by continent Having sum(Population)>80000000;
++---------------+-----------------+
+| Continent     | sum(Population) |
++---------------+-----------------+
+| North America |       482993000 |
+| Asia          |      3705025700 |
+| Africa        |       784475000 |
+| Europe        |       730074600 |
+| South America |       345780000 |
++---------------+-----------------+
+
+4. Write a query which fetch population of continents excluing Asia
+
+SELECT Continent, sum(Population) from Country WHERE NOT Continent="Asia" group by Continent;
++---------------+-----------------+
+| Continent     | sum(Population) |
++---------------+-----------------+
+| North America |       482993000 |
+| Africa        |       784475000 |
+| Europe        |       730074600 |
+| South America |       345780000 |
+| Oceania       |        30401150 |
+| Antarctica    |               0 |
++---------------+-----------------+
+
+=============================================================================
+
+## Order By===> 
+- Used to arrange the rows in the table
+- Filter the column in ASC/DESC order
+
+1. Write a query to fetch countries and population as per DESC order of population (10 entries)
+
+ SELECT Name, Population from country order by Population desc limit 10;
++--------------------+------------+
+| Name               | Population |
++--------------------+------------+
+| China              | 1277558000 |
+| India              | 1013662000 |
+| United States      |  278357000 |
+| Indonesia          |  212107000 |
+| Brazil             |  170115000 |
+| Pakistan           |  156483000 |
+| Russian Federation |  146934000 |
+| Bangladesh         |  129155000 |
+| Japan              |  126714000 |
+| Nigeria            |  111506000 |
++--------------------+------------+
+
+2. Write a query to fetch countries and LifeExpectancy as per ADESC order of population (10 entries) 
+
+SELECT Name, LifeExpectancy from country order by LifeExpectancy desc limit 10;
++-------------+----------------+
+| Name        | LifeExpectancy |
++-------------+----------------+
+| Andorra     |           83.5 |
+| Macao       |           81.6 |
+| San Marino  |           81.1 |
+| Japan       |           80.7 |
+| Singapore   |           80.1 |
+| Australia   |           79.8 |
+| Switzerland |           79.6 |
+| Sweden      |           79.6 |
+| Hong Kong   |           79.5 |
+| Canada      |           79.4 |
++-------------+----------------+
+
+
+3. Write a query to fetch the countinents which contain country count greater than 10 and displays in order of count
+
+
+# Ascending Order
+
+SELECT Continent, count(*) from Country group by continent Having count(*) order by count(*);
++---------------+----------+
+| Continent     | count(*) |
++---------------+----------+
+| Antarctica    |        5 |
+| South America |       14 |
+| Oceania       |       28 |
+| North America |       37 |
+| Europe        |       46 |
+| Asia          |       51 |
+| Africa        |       58 |
++---------------+----------+
+
+# Descending Order
+
+SELECT Continent, count(*) from Country group by continent Having count(*) order by count(*) desc;
++---------------+----------+
+| Continent     | count(*) |
++---------------+----------+
+| Africa        |       58 |
+| Asia          |       51 |
+| Europe        |       46 |
+| North America |       37 |
+| Oceania       |       28 |
+| South America |       14 |
+| Antarctica    |        5 |
++---------------+----------+
+
+4. Write a query to fetch the countinents whose population greater than  80000000 and displays in order of their population
+
+
+# Descending Order
+
+SELECT Continent, sum(Population) from Country group by continent Having sum(Population)>80000000 order by sum(Population) desc;
++---------------+-----------------+
+| Continent     | sum(Population) |
++---------------+-----------------+
+| Asia          |      3705025700 |
+| Africa        |       784475000 |
+| Europe        |       730074600 |
+| North America |       482993000 |
+| South America |       345780000 |
++---------------+-----------------+
+
+# Ascending order
+
+SELECT Continent, sum(Population) from Country group by continent Having sum(Population)>80000000 order by sum(Population);
++---------------+-----------------+
+| Continent     | sum(Population) |
++---------------+-----------------+
+| South America |       345780000 |
+| North America |       482993000 |
+| Europe        |       730074600 |
+| Africa        |       784475000 |
+| Asia          |      3705025700 |
++---------------+-----------------+
+
+
+5. Write a query to fetch the countinents whose Average LifeExpectancy greater than 50  and displays in ASC order of their Lifeexpectancy
+
+SELECT Continent, AVG(LifeExpectancy) from Country group by continent Having AVG(LifeExpectancy)>50 order by AVG(LifeExpectancy);
++---------------+---------------------+
+| Continent     | AVG(LifeExpectancy) |
++---------------+---------------------+
+| Africa        |            52.57193 |
+| Asia          |            67.44118 |
+| Oceania       |            69.71500 |
+| South America |            70.94615 |
+| North America |            72.99189 |
+| Europe        |            75.14773 |
++---------------+---------------------+
+
+
+6. Write a query to fetch the countinents whose Average LifeExpectancy greater than 50  and displays in DESC order of their Lifeexpectancy
+
+SELECT Continent, AVG(LifeExpectancy) from Country group by continent Having AVG(LifeExpectancy)>50 order by AVG(LifeExpectancy) DESC;
++---------------+---------------------+
+| Continent     | AVG(LifeExpectancy) |
++---------------+---------------------+
+| Europe        |            75.14773 |
+| North America |            72.99189 |
+| South America |            70.94615 |
+| Oceania       |            69.71500 |
+| Asia          |            67.44118 |
+| Africa        |            52.57193 |
++---------------+---------------------+
+
+7. Write a query to fetch the countinents whose Average LifeExpectancy greater than 50  and displays in DESC order of their Lifeexpectancy and top 2 entries
+
+
+SELECT Continent, AVG(LifeExpectancy) from Country group by continent Having AVG(LifeExpectancy)>50 order by AVG(LifeExpectancy) DESC limit 2;
+
++---------------+---------------------+
+| Continent     | AVG(LifeExpectancy) |
++---------------+---------------------+
+| Europe        |            75.14773 |
+| North America |            72.99189 |
++---------------+---------------------+
+
+=========================================================
+==> Order of execution of statements in SQL
+
+SELECT DISTINCT<Top_Specification>, <Select_list>
+FROM <table name>
+WHERE <Where_condition>
+GROUP BY <Group_By_List>
+HAVING <having_condition>
+ORDER BY <order_by_List>
+ASC|DESC
+LIMIT
+
+
+Where--->Group By (Aggreate Fun)----> Having ---> Order By (ASC/DESC)
+
+
+SELECT continent, count(*) from country where not continent= "Asia" group by continent having count(*)>20 order by count(*) desc;
++---------------+----------+
+| continent     | count(*) |
++---------------+----------+
+| Africa        |       58 |
+| Europe        |       46 |
+| North America |       37 |
+| Oceania       |       28 |
++---------------+----------+
+
+
+
+
+
+

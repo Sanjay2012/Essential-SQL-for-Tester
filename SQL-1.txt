@@ -1,0 +1,92 @@
+SQL SESSION-1
+======================================
+1) Why Manual Tester required SQL
+2) Understanding of Server-Client for db
+3) Different DB's
+4) SQL- Languages
+5) Commands used by tester 
+6) Constraints for Tables
+7) Different clauses & their sequence of Execution
+8) SQL Joins
+=====================================
+1) Polite
+2) Strict to the point
+3) 30 min
+4) Manual all concept-- Functional, Methodology, Scenarios
+5) SQL essential for tester
+6) API testing 
+7) UNIX essential tester
+
+
+Registration, Login, License, Admin, Product, Produt Group
+
+
+Scenarios:As a customer, i can register using valid license key
+Given Customer url "www.xyz.com"
+And Valid License key is given
+When customes entered valid license key
+Then he can register successfully
+
+1) Once build (module) come to us (Tester), what kind of testing we do first?
+=> Sanity testing--> High level
+=> Never track any bug/ not any test cases
+=> functional testing
+=> Testing complete (SIT)---> Regression
+=> I got defect==> Smoke testing=> Sanity+ package
+=> Customer /deployment (UAT)---> Regression
+=> n-1
+=> stable build
+====================================================
+1) ETL tester/ Manual tester
+2) Analysis
+3) Relationships between the tables
+4) DB refactoring
+5) Backend dev
+======================================
+
+1) SQL server, Oracle, Posgre, MySQL, IBM DB2
+2) DB to DB 
+3) in MySQL TOP command not work
+4) Limit 5; (ASC)
+5) DESC LIMIT;
+6) SREVER-CLIENT
+7) SERVER===> DATABASE-- area where we can store the data
+8) What is by default port no for MySQL ===>3306
+8) GUI-- MySQL Workbench 
+9) CLI-- Command Line Client, MySQL Shell, Window CMD
+
+2) Connecting to MySQL with different options:
+// Local
+
+ A) GUI: Workbench
+ B) CLI:
+    1) Command Line Client:
+      - Password
+      - show databases;
+      - use <<Nameof DB>>
+      - Now perform CURD operations
+
+     2) Connect MySQL using window CMD
+       - open cmd
+       - Go to bin folder of MySQl-- cmd
+       - > mysql -u <username> -p
+         > password: ***
+         > show databases;
+         > use <<Nameof DB>>
+      - Now perform CURD operations
+
+      3) MySQL Shell
+      -  Open MySql Shell
+      - switch to sql--- \sql
+	\connect root@localhost:3306/mydb
+       - asking password: ****\sql
+      - show databases;
+       > use <<Nameof DB>>
+      - Now perform CURD operations
+
+3) remote --- Putty -- Linux
+
+
+
+
+

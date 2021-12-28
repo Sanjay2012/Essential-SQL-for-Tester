@@ -1,0 +1,439 @@
+SQL-3
+==================
+
+use joins;
+Database changed
+
+========================================================
+
+## Inner join
+
+SELECT t1.col1, t1.col2, t2.col1, t2.col2
+FROM t1
+INNER JOIN t2
+ON t1.col3=t2.col3;
+
+
+use joins;
+
+create table t1 (numid int);
+insert into t1 values(10), (11), (12), (14);
+
+
+create table t2 (numid int);
+insert into t2 values(13), (11), (12), (15);
+
+
+select * from t1;
+select * from t2;
+
+-- INNER JOIN
+
+SELECT * 
+FROM t1
+INNER JOIN t2
+ON t1.numid=t2.numid;
+
+
+
+mysql> SELECT *
+    -> FROM t1
+    -> INNER JOIN t2
+    -> ON t1.numid=t2.numid;
++-------+-------+
+| numid | numid |
++-------+-------+
+|    11 |    11 |
+|    12 |    12 |
++-------+-------+
+
+-- LEFT JOIN
+
+SELECT * 
+FROM t1
+LEFT Outer JOIN t2
+ON t1.numid=t2.numid;
+
+
+mysql> SELECT *
+    -> FROM t1
+    -> LEFT Outer JOIN t2
+    -> ON t1.numid=t2.numid;
++-------+-------+
+| numid | numid |
++-------+-------+
+|    10 |  NULL |
+|    11 |    11 |
+|    12 |    12 |
+|    14 |  NULL |
++-------+-------+
+
+
+-- Right JOIN
+
+SELECT * 
+FROM t1
+RIGHT Outer JOIN t2
+ON t1.numid=t2.numid;
+
+mysql> SELECT *
+    -> FROM t1
+    -> RIGHT Outer JOIN t2
+    -> ON t1.numid=t2.numid;
++-------+-------+
+| numid | numid |
++-------+-------+
+|  NULL |    13 |
+|    11 |    11 |
+|    12 |    12 |
+|  NULL |    15 |
++-------+-------+
+
+
+-- full outer join
+-- MySQL not supported
+
+SELECT * 
+FROM t1
+FULL OUTER JOIN t2
+ON t1.numid=t2.numid;
+
+
+==============================================================
+describe tutorial;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| id       | int         | NO   | PRI | NULL    |       |
+| title    | varchar(50) | YES  |     | NULL    |       |
+| subject  | varchar(20) | YES  |     | NULL    |       |
+| duration | double      | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+describe tutorial_info;
++---------+------+------+-----+---------+-------+
+| Field   | Type | Null | Key | Default | Extra |
++---------+------+------+-----+---------+-------+
+| id      | int  | YES  |     | NULL    |       |
+| views   | int  | YES  |     | NULL    |       |
+| likes   | int  | YES  |     | NULL    |       |
+| dislike | int  | YES  |     | NULL    |       |
+| shares  | int  | YES  |     | NULL    |       |
++---------+------+------+-----+---------+-------+
+-------------------------------------------------------------
+
+##  INNER JOIN
+
+ -- INNER JOIN
+mysql> SELECT t1.id, t1.title, t1. duration, t2.views, t2.likes, t2.dislike, t2.shares FROM tutorial AS t1 INNER JOIN tutorial_info AS t2 ON t1.id=t2.id
++----+-------------------------------+----------+-------+-------+---------+--------+
+| id | title                         | duration | views | likes | dislike | shares |
++----+-------------------------------+----------+-------+-------+---------+--------+
+|  1 | Manual Intro                  |    11.45 |  1540 |   800 |     329 |    208 |
+|  2 | Resources in SDLC             |      7.3 |  3125 |   856 |     263 |     60 |
+|  3 | SDLC                          |    21.12 |  5350 |  1966 |     409 |    298 |
+|  4 | Fish Model                    |    16.25 |  2606 |  2000 |     172 |    161 |
+|  5 | V Model                       |     9.46 |  5630 |   592 |     272 |    261 |
+|  6 | Waterfal Model                |     5.21 |  4814 |  1826 |     132 |     39 |
+|  7 | Agile Methdology              |    25.24 |  3598 |  2631 |       9 |    288 |
+|  8 | Functinal Testing             |    57.26 |  3476 |  2250 |     277 |    108 |
+|  9 | STLC                          |    45.56 |  2833 |  2588 |     500 |    248 |
+| 10 | Bug Life Cycle                |    14.21 |  5795 |  2874 |     406 |     23 |
+| 11 | SQL Languages                 |     6.32 |  5936 |  2690 |     171 |     15 |
+| 12 | MySQL setup                   |    10.52 |  5807 |  2636 |     347 |     89 |
+| 13 | DDL and DML                   |    21.36 |  5612 |   985 |      46 |     20 |
+| 14 | Where Clause                  |     9.55 |  3706 |   559 |     444 |    262 |
+| 15 | Group by, Having and Order By |    35.21 |  2846 |   529 |      16 |    142 |
+| 16 | Joins in SQL                  |    27.56 |  4326 |  1932 |     440 |     11 |
+| 17 | Subqueries                    |    19.45 |  2781 |  1436 |     102 |    223 |
+| 18 | Intro to POSTMAN              |     6.12 |  3293 |  1720 |     370 |    249 |
+| 19 | Methods for API Test          |    22.23 |  3304 |  2568 |      89 |     74 |
+| 20 | JSON format for body          |     6.26 |  1513 |   900 |     314 |    102 |
+| 21 | Assertions in POSTMAN         |     7.48 |  3845 |    55 |     188 |    244 |
+| 22 | Env setup                     |     8.56 |   890 |   200 |     185 |      4 |
++----+-------------------------------+----------+-------+-------+---------+--------+
+
+
+SELECT t1.title, sum(t2.views) as Total_Views , SUM(t2.likes) as TOTAl_Likes 
+FROM tutorial AS t1 
+inner JOIN tutorial_info AS t2 
+ON t1.id=t2.id group by t1.title;
+
+
++-------------------------------+-------------+-------------+
+| title                         | Total_Views | TOTAl_Likes |
++-------------------------------+-------------+-------------+
+| Manual Intro                  |        1540 |         800 |
+| Resources in SDLC             |        3125 |         856 |
+| SDLC                          |        5350 |        1966 |
+| Fish Model                    |        2606 |        2000 |
+| V Model                       |        5630 |         592 |
+| Waterfal Model                |        4814 |        1826 |
+| Agile Methdology              |        3598 |        2631 |
+| Functinal Testing             |        3476 |        2250 |
+| STLC                          |        2833 |        2588 |
+| Bug Life Cycle                |        5795 |        2874 |
+| SQL Languages                 |        5936 |        2690 |
+| MySQL setup                   |        5807 |        2636 |
+| DDL and DML                   |        5612 |         985 |
+| Where Clause                  |        3706 |         559 |
+| Group by, Having and Order By |        2846 |         529 |
+| Joins in SQL                  |        4326 |        1932 |
+| Subqueries                    |        2781 |        1436 |
+| Intro to POSTMAN              |        3293 |        1720 |
+| Methods for API Test          |        3304 |        2568 |
+| JSON format for body          |        1513 |         900 |
+| Assertions in POSTMAN         |        3845 |          55 |
+| Env setup                     |         890 |         200 |
++-------------------------------+-------------+-------------+
+
+
+
+
+---------------------------------------------------------------------------------------------
+--- LEFT JOIN
+
+SELECT t1.id, t1.title, t1.subject, t1. duration, t2.views, t2.likes, t2.dislike, t2.shares FROM tutorial AS t1  LEFT JOIN tutorial_info AS t2 ON t1.id=t2.id;
+
+
++----+-------------------------------+----------+-------+-------+---------+--------+
+| id | title                         | duration | views | likes | dislike | shares |
++----+-------------------------------+----------+-------+-------+---------+--------+
+|  1 | Manual Intro                  |    11.45 |  1540 |   800 |     329 |    208 |
+|  2 | Resources in SDLC             |      7.3 |  3125 |   856 |     263 |     60 |
+|  3 | SDLC                          |    21.12 |  5350 |  1966 |     409 |    298 |
+|  4 | Fish Model                    |    16.25 |  2606 |  2000 |     172 |    161 |
+|  5 | V Model                       |     9.46 |  5630 |   592 |     272 |    261 |
+|  6 | Waterfal Model                |     5.21 |  4814 |  1826 |     132 |     39 |
+|  7 | Agile Methdology              |    25.24 |  3598 |  2631 |       9 |    288 |
+|  8 | Functinal Testing             |    57.26 |  3476 |  2250 |     277 |    108 |
+|  9 | STLC                          |    45.56 |  2833 |  2588 |     500 |    248 |
+| 10 | Bug Life Cycle                |    14.21 |  5795 |  2874 |     406 |     23 |
+| 11 | SQL Languages                 |     6.32 |  5936 |  2690 |     171 |     15 |
+| 12 | MySQL setup                   |    10.52 |  5807 |  2636 |     347 |     89 |
+| 13 | DDL and DML                   |    21.36 |  5612 |   985 |      46 |     20 |
+| 14 | Where Clause                  |     9.55 |  3706 |   559 |     444 |    262 |
+| 15 | Group by, Having and Order By |    35.21 |  2846 |   529 |      16 |    142 |
+| 16 | Joins in SQL                  |    27.56 |  4326 |  1932 |     440 |     11 |
+| 17 | Subqueries                    |    19.45 |  2781 |  1436 |     102 |    223 |
+| 18 | Intro to POSTMAN              |     6.12 |  3293 |  1720 |     370 |    249 |
+| 19 | Methods for API Test          |    22.23 |  3304 |  2568 |      89 |     74 |
+| 20 | JSON format for body          |     6.26 |  1513 |   900 |     314 |    102 |
+| 21 | Assertions in POSTMAN         |     7.48 |  3845 |    55 |     188 |    244 |
+| 22 | Env setup                     |     8.56 |   890 |   200 |     185 |      4 |
+| 23 | Eclipse Setup                 |    10.25 |  NULL |  NULL |    NULL |   NULL |
+| 24 | Methods of Webdriver          |    56.23 |  NULL |  NULL |    NULL |   NULL |
+| 25 | Handle POP UP                 |    12.46 |  NULL |  NULL |    NULL |   NULL |
+| 26 | Handle dropdown               |    15.35 |  NULL |  NULL |    NULL |   NULL |
+| 27 | Framework                     |    57.56 |  NULL |  NULL |    NULL |   NULL |
+| 28 | Git and Github                |    59.23 |  NULL |  NULL |    NULL |   NULL |
+| 29 | Jenkins                       |    52.36 |  NULL |  NULL |    NULL |   NULL |
++----+-------------------------------+----------+-------+-------+---------+--------+
+
+
+
+SELECT t1.title, sum(t2.views) as Total_Views , SUM(t2.likes) as TOTAl_Likes 
+FROM tutorial AS t1 
+Left outer JOIN tutorial_info AS t2 
+ON t1.id=t2.id group by t1.title;
+
+
++-------------------------------+-------------+-------------+
+| title                         | Total_Views | TOTAl_Likes |
++-------------------------------+-------------+-------------+
+| Manual Intro                  |        1540 |         800 |
+| Resources in SDLC             |        3125 |         856 |
+| SDLC                          |        5350 |        1966 |
+| Fish Model                    |        2606 |        2000 |
+| V Model                       |        5630 |         592 |
+| Waterfal Model                |        4814 |        1826 |
+| Agile Methdology              |        3598 |        2631 |
+| Functinal Testing             |        3476 |        2250 |
+| STLC                          |        2833 |        2588 |
+| Bug Life Cycle                |        5795 |        2874 |
+| SQL Languages                 |        5936 |        2690 |
+| MySQL setup                   |        5807 |        2636 |
+| DDL and DML                   |        5612 |         985 |
+| Where Clause                  |        3706 |         559 |
+| Group by, Having and Order By |        2846 |         529 |
+| Joins in SQL                  |        4326 |        1932 |
+| Subqueries                    |        2781 |        1436 |
+| Intro to POSTMAN              |        3293 |        1720 |
+| Methods for API Test          |        3304 |        2568 |
+| JSON format for body          |        1513 |         900 |
+| Assertions in POSTMAN         |        3845 |          55 |
+| Env setup                     |         890 |         200 |
+| Eclipse Setup                 |        NULL |        NULL |
+| Methods of Webdriver          |        NULL |        NULL |
+| Handle POP UP                 |        NULL |        NULL |
+| Handle dropdown               |        NULL |        NULL |
+| Framework                     |        NULL |        NULL |
+| Git and Github                |        NULL |        NULL |
+| Jenkins                       |        NULL |        NULL |
++-------------------------------+-------------+-------------+
+
+------------------------------------------------------------------------
+
+-- Right JOIN
+
+SELECT t1.id, t1.title, t1. duration, t2.views, t2.likes, t2.dislike, t2.shares 
+FROM tutorial AS t1 
+RIGHT OUTER JOIN tutorial_info AS t2 
+ON t1.id=t2.id;
+
+
++------+-------------------------------+----------+-------+-------+---------+--------+
+| id   | title                         | duration | views | likes | dislike | shares |
++------+-------------------------------+----------+-------+-------+---------+--------+
+|    1 | Manual Intro                  |    11.45 |  1540 |   800 |     329 |    208 |
+|    2 | Resources in SDLC             |      7.3 |  3125 |   856 |     263 |     60 |
+|    3 | SDLC                          |    21.12 |  5350 |  1966 |     409 |    298 |
+|    4 | Fish Model                    |    16.25 |  2606 |  2000 |     172 |    161 |
+|    5 | V Model                       |     9.46 |  5630 |   592 |     272 |    261 |
+|    6 | Waterfal Model                |     5.21 |  4814 |  1826 |     132 |     39 |
+|    7 | Agile Methdology              |    25.24 |  3598 |  2631 |       9 |    288 |
+|    8 | Functinal Testing             |    57.26 |  3476 |  2250 |     277 |    108 |
+|    9 | STLC                          |    45.56 |  2833 |  2588 |     500 |    248 |
+|   10 | Bug Life Cycle                |    14.21 |  5795 |  2874 |     406 |     23 |
+|   11 | SQL Languages                 |     6.32 |  5936 |  2690 |     171 |     15 |
+|   12 | MySQL setup                   |    10.52 |  5807 |  2636 |     347 |     89 |
+|   13 | DDL and DML                   |    21.36 |  5612 |   985 |      46 |     20 |
+|   14 | Where Clause                  |     9.55 |  3706 |   559 |     444 |    262 |
+|   15 | Group by, Having and Order By |    35.21 |  2846 |   529 |      16 |    142 |
+|   16 | Joins in SQL                  |    27.56 |  4326 |  1932 |     440 |     11 |
+|   17 | Subqueries                    |    19.45 |  2781 |  1436 |     102 |    223 |
+|   18 | Intro to POSTMAN              |     6.12 |  3293 |  1720 |     370 |    249 |
+|   19 | Methods for API Test          |    22.23 |  3304 |  2568 |      89 |     74 |
+|   20 | JSON format for body          |     6.26 |  1513 |   900 |     314 |    102 |
+|   21 | Assertions in POSTMAN         |     7.48 |  3845 |    55 |     188 |    244 |
+|   22 | Env setup                     |     8.56 |   890 |   200 |     185 |      4 |
++------+-------------------------------+----------+-------+-------+---------+--------+
+
+
+=============================================================================================
+
+- Fetch the data for manual subject only
+
+SELECT * FROM tutorial AS t1 JOIN tutorial_info AS t2 ON t1.id=t2.id  where subject="Manual";
++----+-------------------+---------+----------+------+-------+-------+---------+--------+
+| id | title             | subject | duration | id   | views | likes | dislike | shares |
++----+-------------------+---------+----------+------+-------+-------+---------+--------+
+|  1 | Manual Intro      | Manual  |    11.45 |    1 |  1540 |   800 |     329 |    208 |
+|  2 | Resources in SDLC | Manual  |      7.3 |    2 |  3125 |   856 |     263 |     60 |
+|  3 | SDLC              | Manual  |    21.12 |    3 |  5350 |  1966 |     409 |    298 |
+|  4 | Fish Model        | Manual  |    16.25 |    4 |  2606 |  2000 |     172 |    161 |
+|  5 | V Model           | Manual  |     9.46 |    5 |  5630 |   592 |     272 |    261 |
+|  6 | Waterfal Model    | Manual  |     5.21 |    6 |  4814 |  1826 |     132 |     39 |
+|  7 | Agile Methdology  | Manual  |    25.24 |    7 |  3598 |  2631 |       9 |    288 |
+|  8 | Functinal Testing | Manual  |    57.26 |    8 |  3476 |  2250 |     277 |    108 |
+|  9 | STLC              | Manual  |    45.56 |    9 |  2833 |  2588 |     500 |    248 |
+| 10 | Bug Life Cycle    | Manual  |    14.21 |   10 |  5795 |  2874 |     406 |     23 |
++----+-------------------+---------+----------+------+-------+-------+---------+--------+
+
+
+
+SELECT  max(views) FROM tutorial AS t1 JOIN tutorial_info AS t2 ON t1.id=t2.id;
++------------+
+| max(views) |
++------------+
+|       5936 |
++------------+
+
+
+mysql> select * from tutorial AS t1 JOIN tutorial_info AS t2 ON t1.id=t2.id where views=(SELECT  max(views) FROM tutorial AS t1 JOIN tutorial_info AS t2 ON t1.id=t2.id);
++----+---------------+---------+----------+------+-------+-------+---------+--------+
+| id | title         | subject | duration | id   | views | likes | dislike | shares |
++----+---------------+---------+----------+------+-------+-------+---------+--------+
+| 11 | SQL Languages | SQL     |     6.32 |   11 |  5936 |  2690 |     171 |     15 |
++----+---------------+---------+----------+------+-------+-------+---------+--------+
+
+===============================================================================================================
+
+
+Tell me execution
+
+-- Parsing
+	* Syntax check  ---> SELECT, FROM
+	* Semantic check --  table are exist or not/ speling
+	* Execution
+	- FROM --- identify which table
+	- WHERE  --- restrict/eliminate rows
+	- GROUP BY--- Divide the rows in a table into smaller groups
+	- HAVING  --- estrict/eliminate groups
+	- SELECT    ----- identify what column
+	- ORDER BY  --- sorting the rows
+	- ASC | DESC
+	- LIMIT
+
+=======================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

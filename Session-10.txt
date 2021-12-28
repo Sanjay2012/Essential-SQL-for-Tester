@@ -1,0 +1,127 @@
+Session-10
+=======================
+- JOINS
+- UNION | UNION ALL
+- Query writing sequence 
+- Query execution sequence
+===========================
+
+- Use of that command/ clause
+- Syntax
+===========================
+
+* JOINS
+==========
+- join two or more table
+- Primary Key and Foreign Key
+
+1) INNER JOIN
+2) LEFT OUTER JOIN
+3) RIGHT OUTER JOIN
+4) FULL JOIN   -----> not supported
+
+
+# Syntax
+
+t1--> Left table
+t2--> Right table
+
+SELECT t1.col1, t1.col2, t1.col3...., t2.col1, t2.col2, t2.col3...
+FROM t1  INNER JOIN t2
+ON t1.(common col in t1)=t2.(common col in t2)
+
+Sequence of Query Writing
+==========================
+
+SELECT DISTINCT<top specification> <select_list>
+FROM <table_name1>
+JOIN <table_name2>
+ON <join condition common column>
+Where <condition>
+Group By <condition>
+HAVING <conditon>
+Order BY 
+ASC |DESC
+LIMIT
+
+
+
+
+SELECT DISTINCT<top specification> <select_list>
+FROM <TABLENAME>
+Where <condition>
+Group By <condition>
+HAVING <conditon>
+Order BY 
+ASC |DESC
+LIMIT
+===========================================================
+
+Parsing
+	* Syntax check  ---> SELECT, FROM
+	* Semantic check --  table are exist or not/ speling
+
+	* Execution
+	- FROM --- identify which table
+	- WHERE  --- restrict/eliminate rows
+	- GROUP BY--- Divide the rows in a table into smaller groups
+	- HAVING  --- estrict/eliminate groups
+	- SELECT    ----- identify what column <select list>
+
+	- ORDER BY  --- sorting the rows
+	- DISTICT
+	- ASC | DESC
+	- LIMIT
+
+=============================================================
+SQL Notes:
+
+1) Function of that command/ clause
+2) Syntax
+
+1) Types of SQL languages and respective coomand
+ex: DDL
+
+CREATE:
+- Used for creating db and table
+- Syntax: CREATE DB/ table
+-         CREATE TABLE <table_name>(col1 datatyape (size), col2 dt(SIZE), ......);
+
+3) SELECT
+4) DISTINCT
+5) WHERE
+6) GROUP BY  | HAVING
+7) ORDER BY  | ASC | DESC | LIMIT
+8) LOGICAL OPERATORS (AND | OR | NOT)
+   BETWEEN | IN
+9) Wild CARD 
+10) INSERT INTO
+11) UPDATE
+12) DELETE
+13) CREATE  | CONSTRAINT
+14) PRIMARY KEY   | FORRIGN KEY
+15) JOINS
+16) SUBQUERIES
+17) UNION | UNION ALL
+18) Writing and Execution sequence of Query
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

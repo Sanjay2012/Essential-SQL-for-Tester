@@ -1,0 +1,69 @@
+Session-2
+==========================
+MySQL
+
+- NOt as it is in other db
+- LIMIT 5 (ASC/ DESC) 
+
+
+- Languages
+1) DDL --> CREATE, ALTER, drop, truncate, rename  // db & table (structure , data type)
+2) DML --> INSERT, UPDATE, DELETE  // data
+3) DQL --> SELECT --- along with other clause 
+4) TCL --> Commit-- Permanantly save in db, Rollback, Save Point
+5) DCL --> GRANT, ROVOKE
+
+// Once we commit the thing we cannot Rollback
+// DELETE---> Commit---> Rollback is not possible  -- work on data not on the table  --- Rollback is possoble
+// TCL- applicable only on DML commands
+
+## ALTER
+- Alter Structure of db
+-  ADD, DELETE, Modify and Rename  --- column
+- Datatype 
+- varchar 5 (SIZE) 
+- VARCHAR (5)---> increase to 10,15,25
+- VARCHAR (25) ---> decrease to 15, 10
+
+Mobile No===> VARCHAR(8)
+         ===> double
+> ALTER table <table Name> MODIFY COLUMN <Column Name> <What datatype (size)>
+
+ALTER TABLE Employee MODIFY COLUMN Mobile_NO Double;
+
+
+## 
+- Where ---> not applicable on aggregate function
+- Group by ---> (Aggregate function)
+- Having ----> it can be applicable on aggregate function-- alwys used after Group by clause 
+- Order by ---> ASC|DEC
+
+
+Group by:
+-------------
+
+SELECT <col1>,<col2>,aggFun(col3) from <table-name> group by <col1>,<col2>;
+
+
++---------------+-----------------+-----------------+-----------------+-----------------+
+| continent     | max(population) | min(population) | sum(population) | Avg(population) |
++---------------+-----------------+-----------------+-----------------+-----------------+
+| North America |       278357000 |            7000 |       482993000 |   13053864.8649 |
+| Asia          |      1277558000 |          286000 |      3705025700 |   72647562.7451 |
+| Africa        |       111506000 |               0 |       784475000 |   13525431.0345 |
+| Europe        |       146934000 |            1000 |       730074600 |   15871186.9565 |
+| South America |       170115000 |            2000 |       345780000 |   24698571.4286 |
+| Oceania       |        18886000 |               0 |        30401150 |    1085755.3571 |
+| Antarctica    |               0 |               0 |               0 |          0.0000 |
++---------------+-----------------+-----------------+-----------------+-----------------+
+
+
+
+ SELECT 
+FROM
+WHERE
+GROUP BY
+HAVING
+ORDER BY
+ASC|DESC
+LIMIT

@@ -1,0 +1,245 @@
+SESSION-4
+=================
+- Primary Key -- Only one
+- multiple column==> composite
+ (CODE, LANGUAGE)
+
+-------------------------------
+
+--> Schema ---> Detail description of the table
+
+1) JOINS
+2) UNION 
+3) Subqueries
+
+=========================================
+* Subqueries--
+- one query acts as input to another query
+- 
+
+mysql> select max(Population) from country;
++-----------------+
+| max(Population) |
++-----------------+
+|      1277558000 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select * from country where population=1277558000;
++------+-------+-----------+--------------+-------------+-----------+------------+----------------+-----------+-----------+-----------+------------------+-------------+---------+-------+
+| Code | Name  | Continent | Region       | SurfaceArea | IndepYear | Population | LifeExpectancy | GNP       | GNPOld    | LocalName | GovernmentForm   | HeadOfState | Capital | Code2 |
++------+-------+-----------+--------------+-------------+-----------+------------+----------------+-----------+-----------+-----------+------------------+-------------+---------+-------+
+| CHN  | China | Asia      | Eastern Asia |  9572900.00 |     -1523 | 1277558000 |           71.4 | 982268.00 | 917719.00 | Zhongquo  | People'sRepublic | Jiang Zemin |    1891 | CN    |
++------+-------+-----------+--------------+-------------+-----------+------------+----------------+-----------+-----------+-----------+------------------+-------------+---------+-------+
+1 row in set (0.00 sec)
+
+mysql> select max(Population) from country;
++-----------------+
+| max(Population) |
++-----------------+
+|      1277558000 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select * from country where population=(select max(Population) from country);
++------+-------+-----------+--------------+-------------+-----------+------------+----------------+-----------+-----------+-----------+------------------+-------------+---------+-------+
+| Code | Name  | Continent | Region       | SurfaceArea | IndepYear | Population | LifeExpectancy | GNP       | GNPOld    | LocalName | GovernmentForm   | HeadOfState | Capital | Code2 |
++------+-------+-----------+--------------+-------------+-----------+------------+----------------+-----------+-----------+-----------+------------------+-------------+---------+-------+
+| CHN  | China | Asia      | Eastern Asia |  9572900.00 |     -1523 | 1277558000 |           71.4 | 982268.00 | 917719.00 | Zhongquo  | People'sRepublic | Jiang Zemin |    1891 | CN    |
++------+-------+-----------+--------------+-------------+-----------+------------+----------------+-----------+-----------+-----------+------------------+-------------+---------+-------+
+1 row in set (0.00 sec)
+
+mysql> select population from country order by population limit 1;
++------------+
+| population |
++------------+
+|          0 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select population from country order by population desc limit 1;
++------------+
+| population |
++------------+
+| 1277558000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select * from country where population=(select population from country order by population desc limit 1);
++------+-------+-----------+--------------+-------------+-----------+------------+----------------+-----------+-----------+-----------+------------------+-------------+---------+-------+
+| Code | Name  | Continent | Region       | SurfaceArea | IndepYear | Population | LifeExpectancy | GNP       | GNPOld    | LocalName | GovernmentForm   | HeadOfState | Capital | Code2 |
++------+-------+-----------+--------------+-------------+-----------+------------+----------------+-----------+-----------+-----------+------------------+-------------+---------+-------+
+| CHN  | China | Asia      | Eastern Asia |  9572900.00 |     -1523 | 1277558000 |           71.4 | 982268.00 | 917719.00 | Zhongquo  | People'sRepublic | Jiang Zemin |    1891 | CN    |
++------+-------+-----------+--------------+-------------+-----------+------------+----------------+-----------+-----------+-----------+------------------+-------------+---------+-------+
+1 row in set (0.00 sec)
+
+mysql> select max(Population) from country;
++-----------------+
+| max(Population) |
++-----------------+
+|      1277558000 |
++-----------------+
+1 row in set (0.00 sec)
+
+ select max(population) from country where population NOT IN (select max(Population) from country);
++-----------------+
+| max(population) |
++-----------------+
+|      1013662000 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select max(population) from country where population < (select max(Population) from country);
++-----------------+
+| max(population) |
++-----------------+
+|      1013662000 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select * from country where population=(select max(population) from country where population < (select max(Population) from country));
++------+-------+-----------+---------------------------+-------------+-----------+------------+----------------+-----------+-----------+--------------+------------------+--------------------------+---------+-------+
+| Code | Name  | Continent | Region                    | SurfaceArea | IndepYear | Population | LifeExpectancy | GNP       | GNPOld    | LocalName    | GovernmentForm   | HeadOfState              | Capital | Code2 |
++------+-------+-----------+---------------------------+-------------+-----------+------------+----------------+-----------+-----------+--------------+------------------+--------------------------+---------+-------+
+| IND  | India | Asia      | Southern and Central Asia |  3287263.00 |      1947 | 1013662000 |           62.5 | 447114.00 | 430572.00 | Bharat/India | Federal Republic | Kocheril Raman Narayanan |    1109 | IN    |
++------+-------+-----------+---------------------------+-------------+-----------+------------+----------------+-----------+-----------+--------------+------------------+--------------------------+---------+-------+
+
+
+========================================================
+
+show tables;
++---------------+
+| Tables_in_new |
++---------------+
+| department    |
+| employee      |
+| location      |
++---------------+
+3 rows in set (0.01 sec)
+
+mysql> describe employee;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| EMPID      | varchar(50) | YES  |     | NULL    |       |
+| FirstName  | varchar(50) | YES  |     | NULL    |       |
+| LastName   | varchar(50) | YES  |     | NULL    |       |
+| JobID      | int         | YES  |     | NULL    |       |
+| ManagerID  | int         | YES  |     | NULL    |       |
+| HireDate   | date        | YES  |     | NULL    |       |
+| Salary     | int         | YES  |     | NULL    |       |
+| Commission | int         | YES  |     | NULL    |       |
+| DeptId     | int         | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+9 rows in set (0.01 sec)
+
+mysql> describe department;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| DeptId   | int         | YES  |     | NULL    |       |
+| DeptName | varchar(50) | YES  |     | NULL    |       |
+| Location | int         | NO   | PRI | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> describe location;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Location | int         | YES  | MUL | NULL    |       |
+| Country  | varchar(50) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+
+
+
+
+1) employee whose salary > 30000;
+2) Find employees who are working under Testing dept 
+3) Find the employees who are working from INDIA
+4) Update the salary of employee who working under INDIA on basis of 20%
+
+
+=================================================================================
+
+JOINS
+========
+- Use to join two or more tables based on PK and FK
+
+1) Inner JOIN
+2) Left Outer join
+3) Right Outer Join
+4) Full Join    -------> MySQL not supported
+
+
+==> Statement sequence
+
+        SELECT DISTINCT <Top_Specification> <Select_List>
+	From <Left_Table>
+	<join_Type> JOIN <right_Table>
+	ON <join_condition>
+	WHERE <Where_condition>
+	GROUP BY <gropu_by_List>
+	HAVING <having_condition>
+	ORDER BY <order_by_List>
+	ASC|DESC
+	LIMIT
+
+
+select * from tutorial AS t1 JOIN tutorial_info AS t2 ON t1.id=t2.id where views=(SELECT  max(views) FROM tutorial AS t1 JOIN tutorial_info AS t2 ON t1.id=t2.id);
++----+---------------+---------+----------+------+-------+-------+---------+--------+
+| id | title         | subject | duration | id   | views | likes | dislike | shares |
++----+---------------+---------+----------+------+-------+-------+---------+--------+
+| 11 | SQL Languages | SQL     |     6.32 |   11 |  5936 |  2690 |     171 |     15 |
++----+---------------+---------+----------+------+-------+-------+---------+--------+
+
+
+
+
+* Query to find the total views subject wise
+SELECT subject, sum(views) FROM tutorial AS t1 JOIN tutorial_info AS t2 ON t1.id=t2.id group by subject;
++---------+------------+
+| subject | sum(views) |
++---------+------------+
+| Manual  |      38767 |
+| SQL     |      31014 |
+| API     |      12845 |
++---------+------------+
+
+
+*query to display details of manual subject
+
+SELECT t1.id, t1.title, t1. duration, t2.views, t2.likes, t2.dislike, t2.shares
+    -> FROM tutorial AS t1
+    -> LEFT JOIN tutorial_info AS t2
+    -> ON t1.id=t2.id
+    -> WHERE subject="MANUAL";
++----+-------------------+----------+-------+-------+---------+--------+
+| id | title             | duration | views | likes | dislike | shares |
++----+-------------------+----------+-------+-------+---------+--------+
+|  1 | Manual Intro      |    11.45 |  1540 |   800 |     329 |    208 |
+|  2 | Resources in SDLC |      7.3 |  3125 |   856 |     263 |     60 |
+|  3 | SDLC              |    21.12 |  5350 |  1966 |     409 |    298 |
+|  4 | Fish Model        |    16.25 |  2606 |  2000 |     172 |    161 |
+|  5 | V Model           |     9.46 |  5630 |   592 |     272 |    261 |
+|  6 | Waterfal Model    |     5.21 |  4814 |  1826 |     132 |     39 |
+|  7 | Agile Methdology  |    25.24 |  3598 |  2631 |       9 |    288 |
+|  8 | Functinal Testing |    57.26 |  3476 |  2250 |     277 |    108 |
+|  9 | STLC              |    45.56 |  2833 |  2588 |     500 |    248 |
+| 10 | Bug Life Cycle    |    14.21 |  5795 |  2874 |     406 |     23 |
++----+-------------------+----------+-------+-------+---------+--------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

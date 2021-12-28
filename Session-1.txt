@@ -1,0 +1,88 @@
+SQL
+=====================
+Manual concept
+SQL --understanding
+API testing
+===============================================
+
+Database V/S DBMS
+• Database:
+• It is collection of meaningful data.
+• It is group of objects( table, views, synonyme,UDF, Procedure, trigger etc...)
+• DBMS:
+• DBMS is management system which manages the data base objects and data 
+as well.
+• Activities
+• 1. Create
+• 2. Inserting data
+• 3. Deleting data from the objects
+• 4. Retrieve/select data from the objects
+
+================================
+
+
+Database software
+• The software is used for doing DBMS/RDBMS activities is called 
+database.
+• RDBMS( Relational Database Management System)
+• Relationships between the database Objects.
+• DBMS
+• Ex: MS-Access, D-Base, FoxPro etc...
+• RDBMS:-
+• Ex: Oracle, MS-SQL Server, IBM DB2, MySQL (free source), Sybase, Teradata 
+etc....
+
+=========================
+Database Components
+• 1. DB Client 
+• 2. DB Server
+• DB Client is a interface used for connecting to database( CLI or GUI).
+• DB Server is a storage area where the database objects and data will 
+be stored.
+• SQL is a Language used to communicate with the database objects.
+====================
+SQL== Structured Qurey Language
+
+Data==> Any afct that can be recored
+e.g text, image, audio ,video ect.
+
+Server---client
+
+MySQL
+
+GUI- MySQl workbench
+CLI- Command line interview
+
+==================
+
+File management system:
+-Excel
+- drawback== Retriving / relationtion between data is not possible
+====================================
+USER-----DBMS------DB
+- Table
+- Single table
+- Cannot change/delete sigle entry
+- Ms Access
+==========================================
+RDBMS- Relational 
+- stored data in more than table
+- Relationship b/w table is simple
+- SQL, MS SQL server, MySQL, oracle
+========================================
+SQL Language
+1. DDL( Data Definition Language)
+2. DML( Data Manipulation Language)
+3. DRL/DQL ( Data Retrieval Language/Data Query Language)
+4. TCL ( Transaction Control Language)
+5. DCL ( Data Control Language)
+==================================
+
+SQL Commands
+• DDL: create, alter, drop, truncate, rename
+• DML: insert, update, delete
+• DRL/DQL: select
+• TCL: Commit, Rollback, save point
+• DCL: GRANT, REVOKE
+===================================
+

@@ -1,0 +1,77 @@
+Session-11
+======================
+LIKE operator | Wild cards
+UNION | UNION ALL
+
+==========================================
+
+LIKE---> always use with where clause
+	- USED to search specific condition data in a column
+Wild cards: _ & %
+
+% -- zero, one, or multiple characters
+_ -- represents one/single character
+__ -- represnt two characters
+
+1) end with specific alphabete
+    WHERE col_name LIKE '%a'
+e.g INDIA---> %a
+
+2) starting with specific alphabet
+	WHERE col_name LIKE 'i%'
+
+e.g  INDIA, Indoneshia
+
+3) starting with specific alphabets
+      IND% 
+
+4) end with specific alphabetes
+	%IA
+
+5) ____A
+
+============================================
+
+UNION:
+
+- show the same named column as one from different table
+- appending
+- name of column may different but datatype should be
+- col from 1st table srNo--- number(int, flot)
+- col from 2st table Id--- number(int, flot)
+- UNION--> unique record
+- UNION ALL--> duplicate column values
+
+Student: id, Sname, dept, Marks
+Teachers: SrNo,Fname,deptid, Quali
+
+# Syntax
+
+
+SELECT col1, col2, col3 from tab1 
+UNION | UNION ALL
+SELECT col1, col2, col3 from tab2;
+
+
+
+
+SELECT * from tab1 where srNo=1
+UNION | UNION ALL
+SELECT * from tab2 where id=1;
+
+SELECT * from tab1 
+UNION | UNION ALL
+SELECT * from tab2
+order By Fname;
+
+
+
+
+
+
+
+
+
+
+
+

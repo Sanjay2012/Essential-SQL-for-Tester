@@ -1,0 +1,91 @@
+Session-4
+
+
+=======================
+AGENDA
+=======================
+1) Understanding SQL datatypes===> 
+numeric-- int
+String-- varchar(size)
+date & time-- date
+
+
+2) Understanding of remaining commands from  DDL and DML
+2) WHERE (Filtering the data based on condition)
+  > used with SELECT query
+3)OPerators
+
+---------------------------------------
+DDL==> create, alter, drop, trunchate, rename
+DML==> insert, update, delete
+
+autocommit=1--- bydefault
+
+===============================
+Numeric data type:
+- TINYINT  -128 to 127
+- smallint  -32768 to 32767
+- mediumint -8388608 to 8388607
+
+=============================
+Datarefactor (Existing table)--- if you change
+
+=================
+DDL==> Alter, Rename
+
+
+***ALTER**
+> Used to alter the structure of the database
+> Used to Add, Delete, Modify or Rename the database objects from existing table
+> The user needs to know the existing table name and can do add, delete or modify tasks easily.
+
+
+1) Add column from Existing Table
+> ALTER TABLE <table_name> ADD column_name datatype;
+> ALTER TABLE Emp_info ADD mobile_no  double(10);
+
+2) Delete columns from the existing table
+> ROLLBACK not possible // rollback work on DML command
+> ALTER TABLE <table_name>  DROP COLUMN  colunm_name
+> ALTER TABLE Emp_info  DROP COLUMN   Address;
+
+3) Modifying Existing column
+> Increase/ dercrease the size of the column
+> ALTER TABLE Emp_info MODIFY COLUMN  EName  VARCHAR (255);'
+> Increase size of the column possible
+> Decrease size of the column possible but need to clear exiting data from table
+> ALTER TABLE <table_name>  MODIFY COLUMN  colunm_name datatype (value to be modify)
+> Change the data type of the column
+> ALTER TABLE <table_name>  MODIFY COLUMN  colunm_name chage_ datatype (value)
+
+4) Rename the column
+> ALTER TABLE <table_name> RENAME COLUMN old_column TO new_column
+
+================================================
+
+***RENAME****
+> Change the name of table
+> RENAME TABLE Old_table_Name TO New_Table_Name;
+> RENAME TABLE employee TO EMP;
+
+
+=====================
+=============================
+UPDATE SET:--- come under DML===> values inside the table
+-update/modify the value of a column into the table
+- you can update one or more column at a time
+
+-conditional===where
+- SRNO-- reference
+
+UPDATE sample SET FIRST_NAME="SACHIN" where SRNO=1;
+=================================
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,302 @@
+Session-9
+=======================
+Agenda:
+
+- Constarints
+- Subqueries
+============================
+
++ Constraints
+
+NULL--> Nothing =/ 0
+
+
+1) NOLT NULL
+---------------------------
+--> should not be null
+---> it should be zero
+--> Duplicate also allowed 
+
+CREATE TABLE NOTNULLCHECK (
+    id INT NOT NULL,
+    name VARCHAR(50),
+    location VARCHAR(50),
+    age INT
+);
+
+insert into NOTNULLCHECK values (1, "Ajit", "Pune", 12);  -- valid
+insert into NOTNULLCHECK values(2, "sachin", "mumbai", 15);  -- valid
+insert into NOTNULLCHECK values(null, "Ashish", "Chennai", 18);  -- invalid   -- null not allowed
+insert into NOTNULLCHECK values(1, "Ankur", "mumbai", 15);  -- valid
+insert into NOTNULLCHECK values(0, "Nitu", "mumbai", 18);  -- valid
+
+----------------------------------------------------------------------------
+
+
+2) UNIQUE   
+
+--> cell value should be different/ unique 
+--> accept the null--> only one time
+
+CREATE TABLE Uniquecheck (
+    id INT unique,
+    name VARCHAR(50),
+    location VARCHAR(50),
+    age INT
+);
+insert into Uniquecheck values(1, "Ajit", "Pune", 12);    // valid
+insert into Uniquecheck values(2, "sachin", "mumbai", 15);   // valid
+insert into Uniquecheck values(null, "Ashish", "Chennai", 18);   // valid
+insert into profile values(1, "Ashish", "Chennai", 18);     // invalid -- duplicate
+
+---------------------------------------------------------------
+
+
+3) PRIMARY KEY  
+--> NOT NULL + UNIQUE
+--> Primary Key column will not allow duplicate value and also NULL value  
+--> (PK- Parent table)
+--> Primary key constraint created at table and column level
+
+--> PARENT TABLE 
+
+// Primary key created at table level
+
+CREATE TABLE Profile(
+id int NOT NULL,
+name varchar(50),
+location varchar(50),
+age int,
+PRIMARY KEY(id)
+);
+
+
+// Primary key created at column level
+
+CREATE TABLE Profile(
+id int primary KEY,
+name varchar(50),
+location varchar(50),
+age int
+);
+
+
+
+
+
+4) FOREIGN KEY  --> Uniquely identify a record in another table (F-- Child table)
+- used to link two table together
+- FK-- present in one table and that refere to PK from another table
+- A Foreign key is used when we connect two or more tables 
+- A foreign key is a field  in a table that refers to the Primary key of the other table. 
+- It is responsible for managing the relationship between the tables.
+- The table which contains the foreign key is often called the child table
+- the table whose primary key is being referred by the foreign key is called the Parent Table.
+
+- update, delete
+
+
+
+
+- Cannot add or update a child row
+- Cannot delete or update a parent row
+
+Profile-- Roll No, Name, MO,Address,   ---> Roll No (Primary key)===> Parent table
+
+dept--    Roll No, lcardId, Perc, Dept   ---> Child  FK(RollNo) references Profile
+
+           229
+- Update, delete 
+
+### Example
+
+CREATE TABLE Dept(
+id int ,
+LibraryId int,
+Dept varchar(50) ,
+Perct float,
+FOREIGN KEY(id, DEPT) 
+REFERENCES profile(id) 
+);
+
+insert into Dept values (1, 112, "Lotus", 80.89 ), (2, 221, "Tiger", 95.28 ), 
+                        (3, 150, "Pink", 96.89 ), 
+                        (4, 421, "RED", 98.88 ), 
+                        (5, 602, "Yello", 98.25 );   
+
+-- profile--> Parent table
+-- Dept --> Child Table
+
+insert into Dept values (15, 2565, "Danger", 90.32 ) 
+// not allowed  since id =15 not present in profiles Primary Key column
+
+
+Delete from profile where id=1;
+// not allowed since the id=1 primary key column value refred by Foreign Key of child table
+
+
+
+- We canot delete or update the record from parent table  --- since, those record are refered by Child table
+(If record contain the data belong to primary key column of parent table)
+
+- We canot add or update the record from child table 
+
+
+- 1-10 roll no-- parent table 
+- 1-10 roll no--- child table
+
+if i add 99 roll no in child table --- invalid
+
+-------
+
+-- If we want to delete / update data parallely on parent and child table
+then nedd to add below rules while creating or altering the table
+
+** on update cascade -- allow to update parent -child data parallaly
+** on delete cascade -- allow to delete parent -child data parallaly
+
+CREATE TABLE Dept(
+id int ,
+LibraryId int,
+Dept varchar(50) ,
+Perct float,
+FOREIGN KEY(id, DEPT) 
+REFERENCES profile(id) on update cascade on delete cascade
+);
+
+
+--Now if we fire below query
+
+Delete from profile where id=1;
+
+-- rows related to id=1 deleted from both Parent and child table
+
+
+Primary Key and Foreign Key
+--------------------------
+--> Only one PRIMARY KEY for a single table
+--> If for any table two column have unique vale then we can create composite PRIMARY KEY
+---> Ex. Code & Languge===> (91, HINDI) UNIQUE===> Composite Key
+--> multiple FK may be possible
+
+--> Add rule--> ON UPDATE CASCADE ON DELETE CASCADE
+-----------------------------------------------------
+
+* CHECk:
+- Allowes user tom enter specific values into column
+- CHECK --> column satisfies a specific condition > 6 years
+
+CREATE TABLE Check1(
+sid int  ,
+sname varchar(10),
+Marks int check(Marks Between 45 AND 100)
+);
+
+
+insert into check1 values(521, "Suraj", 65);  // valid
+insert into check1 values(421, "Rahul", 20);  // ivalid  -- Check constraint violeted
+
+
+-- CHECK CONSTRAINT, AUTO INCREMENT
+
+Create table student1(
+SID TINYINT unsigned NOT NULL auto_increment primary KEY,
+SNAME varchar(10),
+Age tinyint check(Age >=18)
+);
+
+insert into student1 (SNAME, Age) values("ASHISH", 32);
+insert into student1 (SNAME, Age) values("JAYESH", 35);
+
+-----------
+
+* Default
+
+6) DEFAULT  --> Sets a default valye for a column when no value is specified
+
+- Specify rules in the table (column)
+- CREATE table/ ALTER TABLE
+- At table level / column
+
+- used to provide default value to the column
+- The default value will be added to all record if no other value is specified
+
+Create table Info(
+SrNo int unsigned auto_increment primary KEY,
+SNAME varchar(10),
+Age tinyint check(Age >=18),
+City varchar(10) default 'PUNE' );
+
+insert into Info (SNAME, Age) values("ASHISH", 32);
+insert into Info (SNAME, Age) values("JAYESH", 35);
+insert into Info (SNAME, Age, City) values("JAYESH", 20, "Mumbai");
+
+
+select * from Info;
++------+--------+------+--------+
+| SrNo | SNAME  | Age  | City   |
++------+--------+------+--------+
+|    1 | ASHISH |   32 | PUNE   |
+|    2 | JAYESH |   35 | PUNE   |
+|    3 | JAYESH |   20 | Mumbai |
++------+--------+------+--------+
+
+insert into Info (SNAME, Age) values("Atul", 13);
+
+ERROR 3819 (HY000): Check constraint 'info_chk_1' is violated.
+
+
+----------------
+
+CREATE TABLE Default1(
+Id int unsigned auto_increment primary KEY ,
+OrderName varchar(10),
+OrderDate datetime default NOW()); 
+
+insert into Default1 (OrderName) values("Pizaa");
+insert into Default1 (OrderName) values("Burger");
+
+select * from default1;
++----+-----------+---------------------+
+| Id | OrderName | OrderDate           |
++----+-----------+---------------------+
+|  1 | Pizaa     | 2021-12-10 20:34:23 |
+|  2 | Burger    | 2021-12-10 20:35:18 |
++----+-----------+---------------------+
+
+=========================================================
+1. Join
+2. Union/ UNION All
+3. Subqueries
+
+
+
+1.Write a query  to fetch the employee  who are working under TESTING departmen 
+
+select count(*) from employee where DeptId=
+ (select deptID from department where DeptName="Testing");
+
+
+2. Write a query to fetch the employees who are working from INDIA
+
+select * from employee where deptid=
+ (select deptid from department where location=
+ (select location from location where country="INDIA"));
+
+3. Write a query to update the salary of employee who are working from INDIA on the basis of 15%;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

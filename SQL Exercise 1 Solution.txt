@@ -1,0 +1,190 @@
+Exercise Solution
+=====================
+CREATE DATABASE profile;
+USE profile;
+CREATE TABLE Employee(
+			EMPID int, 
+            Fname varchar(25), 
+            ManagerID int, 
+            DOJ DATE, 
+            City varchar(25), 
+			Project varchar(5), 
+            Salary int, Variable int
+            );
+                        
+INSERT INTO Employee VALUES(121, "Ajit", 986, "2016-05-01", "Hyderabad", "P1", 50000, 500);
+INSERT INTO Employee VALUES(321, "Kiran", 936, "2015-06-01", "Pune", "P2", 60000, 1000);
+INSERT INTO Employee VALUES(421, "David", 876, "2012-07-10", "Chennai", "P1", 75000, 3000);
+INSERT INTO Employee VALUES(521, "Vijay", 986, "2017-07-30", "Pune", "P3", 85000, 2500);
+
+select * from Employee;
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+| EMPID | Fname | ManagerID | DOJ        | City      | Project | Salary | Variable |
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+|   121 | Ajit  |       986 | 2016-05-01 | Hyderabad | P1      |  50000 |      500 |
+|   321 | Kiran |       936 | 2015-06-01 | Pune      | P2      |  60000 |     1000 |
+|   421 | David |       876 | 2012-07-10 | Chennai   | P1      |  75000 |     3000 |
+|   521 | Vijay |       986 | 2017-07-30 | Pune      | P3      |  85000 |     2500 |
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+
+---------------------------------------------------------------------------------------------------
+1. Write a query to fetch EmpId and Name of all Employee working under manger whose Id is 986
+
+SELECT EMPID, Fname from Employee WHERE ManagerID=986;
++-------+-------+
+| EMPID | Fname |
++-------+-------+
+|   121 | Ajit  |
+|   521 | Vijay |
++-------+-------+
+----------------------------------------------------------------------------------------
+2. Write a query to fetch the different project avialbale from Employee table
+
+SELECT DISTINCT Project from Employee;
++---------+
+| Project |
++---------+
+| P1      |
+| P2      |
+| P3      |
++---------+
+---------------------------------------------------------------------------------------
+3	Write a query to fetch the count of employee working in project P1
+
+SELECT COUNT(*) FROM Employee WHERE Project="P1";
++----------+
+| COUNT(*) |
++----------+
+|        2 |
++----------+
+
+OR
+
+ SELECT COUNT(*) as EMP_Working_In_Project_P1 FROM Employee WHERE Project="P1";
++---------------------------+
+| EMP_Working_In_Project_P1 |
++---------------------------+
+|                         2 |
++---------------------------+
+------------------------------------------------------------------------------------------
+4	Write a query to find min, max and AVG sallary of Employee
+
+SELECT MIN(Salary), MAX(Salary), AVG(Salary) from Employee;
++-------------+-------------+-------------+
+| MIN(Salary) | MAX(Salary) | AVG(Salary) |
++-------------+-------------+-------------+
+|       50000 |       85000 |  67500.0000 |
++-------------+-------------+-------------+
+----------------------------------------------------------------------------------------------
+5	Write a query to fetch the employees whose salary lies in the range of 55000 to 82000
+
+SELECT * FROM Employee WHERE Salary BETWEEN 55000 AND 82000;
++-------+-------+-----------+------------+---------+---------+--------+----------+
+| EMPID | Fname | ManagerID | DOJ        | City    | Project | Salary | Variable |
++-------+-------+-----------+------------+---------+---------+--------+----------+
+|   321 | Kiran |       936 | 2015-06-01 | Pune    | P2      |  60000 |     1000 |
+|   421 | David |       876 | 2012-07-10 | Chennai | P1      |  75000 |     3000 |
++-------+-------+-----------+------------+---------+---------+--------+----------+
+
+----------------------------------------------------------------------------------------------
+6	Write a query to fetch employees who live in Chennai and working under manger whose Id is 876
+
+SELECT * FROM Employee WHERE City="Chennai" AND ManagerID=876;
++-------+-------+-----------+------------+---------+---------+--------+----------+
+| EMPID | Fname | ManagerID | DOJ        | City    | Project | Salary | Variable |
++-------+-------+-----------+------------+---------+---------+--------+----------+
+|   421 | David |       876 | 2012-07-10 | Chennai | P1      |  75000 |     3000 |
++-------+-------+-----------+------------+---------+---------+--------+----------+
+-------------------------------------------------------------------------------------------
+7	Write a query to fetch employees who either live in Pune or work under manager whose Id is 986
+
+SELECT * FROM Employee WHERE City="Pune" OR ManagerID=986;
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+| EMPID | Fname | ManagerID | DOJ        | City      | Project | Salary | Variable |
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+|   121 | Ajit  |       986 | 2016-05-01 | Hyderabad | P1      |  50000 |      500 |
+|   321 | Kiran |       936 | 2015-06-01 | Pune      | P2      |  60000 |     1000 |
+|   521 | Vijay |       986 | 2017-07-30 | Pune      | P3      |  85000 |     2500 |
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+----------------------------------------------------------------------------------------------------
+
+8  Write a query to fetch all employees who work on project other than P1
+
+SELECT * FROM Employee WHERE Project="P1";
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+| EMPID | Fname | ManagerID | DOJ        | City      | Project | Salary | Variable |
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+|   121 | Ajit  |       986 | 2016-05-01 | Hyderabad | P1      |  50000 |      500 |
+|   421 | David |       876 | 2012-07-10 | Chennai   | P1      |  75000 |     3000 |
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+
+--------------------------------------------------------------------------------------------------
+9	Write a query to fetch the total salary of each employee adding the salary with variable value 
+
+SELECT Fname, Salary+Variable FROM Employee Order By Fname;
++-------+-----------------+
+| Fname | Salary+Variable |
++-------+-----------------+
+| Ajit  |           50500 |
+| David |           78000 |
+| Kiran |           61000 |
+| Vijay |           87500 |
++-------+-----------------+
+----------------------------------------------------------------------------------
+
+10	Write a query to fetch a employees whose salary not in specified sallary list (50000, 60000, 85000)
+
+
+SELECT * FROM Employee WHERE Salary NOT IN (50000, 60000, 85000);
++-------+-------+-----------+------------+---------+---------+--------+----------+
+| EMPID | Fname | ManagerID | DOJ        | City    | Project | Salary | Variable |
++-------+-------+-----------+------------+---------+---------+--------+----------+
+|   421 | David |       876 | 2012-07-10 | Chennai | P1      |  75000 |     3000 |
++-------+-------+-----------+------------+---------+---------+--------+----------+
+--------------------------------------------------------------------------------------------
+11	Write a query to fetch all  Employee record in asending order
+SELECT * FROM Employee Order By Fname;
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+| EMPID | Fname | ManagerID | DOJ        | City      | Project | Salary | Variable |
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+|   121 | Ajit  |       986 | 2016-05-01 | Hyderabad | P1      |  50000 |      500 |
+|   421 | David |       876 | 2012-07-10 | Chennai   | P1      |  75000 |     3000 |
+|   321 | Kiran |       936 | 2015-06-01 | Pune      | P2      |  60000 |     1000 |
+|   521 | Vijay |       986 | 2017-07-30 | Pune      | P3      |  85000 |     2500 |
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+--------------------------------------------------------------------------------------------------
+
+12	Write a query to fetch a employee record in decending order
+
+SELECT * FROM Employee Order By Fname DESC;
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+| EMPID | Fname | ManagerID | DOJ        | City      | Project | Salary | Variable |
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+|   521 | Vijay |       986 | 2017-07-30 | Pune      | P3      |  85000 |     2500 |
+|   321 | Kiran |       936 | 2015-06-01 | Pune      | P2      |  60000 |     1000 |
+|   421 | David |       876 | 2012-07-10 | Chennai   | P1      |  75000 |     3000 |
+|   121 | Ajit  |       986 | 2016-05-01 | Hyderabad | P1      |  50000 |      500 |
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+------------------------------------------------------------------------------------------------------
+13	Write a query to fetch two employees record whos salary is Higest in table  (Hint: Top 2 records)
+
+SELECT * FROM Employee Order By Salary DESC Limit 2;
++-------+-------+-----------+------------+---------+---------+--------+----------+
+| EMPID | Fname | ManagerID | DOJ        | City    | Project | Salary | Variable |
++-------+-------+-----------+------------+---------+---------+--------+----------+
+|   521 | Vijay |       986 | 2017-07-30 | Pune    | P3      |  85000 |     2500 |
+|   421 | David |       876 | 2012-07-10 | Chennai | P1      |  75000 |     3000 |
++-------+-------+-----------+------------+---------+---------+--------+----------+
+
+--------------------------------------------------------------------------------------------------------------
+14	Write a query to fetch two employees record whos salary is lowest in table  (Hint: LEAST 2 records)
+
+mysql> SELECT * FROM Employee Order By Salary Limit 2;
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+| EMPID | Fname | ManagerID | DOJ        | City      | Project | Salary | Variable |
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+|   121 | Ajit  |       986 | 2016-05-01 | Hyderabad | P1      |  50000 |      500 |
+|   321 | Kiran |       936 | 2015-06-01 | Pune      | P2      |  60000 |     1000 |
++-------+-------+-----------+------------+-----------+---------+--------+----------+
+
+-----------------------------------------------------------------------------------------------------

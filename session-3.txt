@@ -1,0 +1,162 @@
+Session-3
+=====================
+Agenda:
+=====================
+1) Create database
+2) Create table in db
+3) Insert data into db
+4) retrive/select data from db
+5) Understand DDL and DML commands
+DDL==> CREATE, TRUNCATE, DROP
+DML==> INSERT, DELETE
+
+ALTER=== Combinations  -- we will discuss later
+=================================
+> Every application required db
+
+Entities in server:==>
+Database---> Location /area where data/contents stored
+Table--Object
+
+===========================
+SQL Language
+1. DDL( Data Definition Language)
+2. DML( Data Manipulation Language)
+3. DRL/DQL ( Data Retrieval Language/Data Query Language)
+4. TCL ( Transaction Control Language)
+5. DCL ( Data Control Language)
+==================================
+
+SQL Commands
+• DDL: create, alter, drop, truncate, rename
+ 
+• DML: insert, update, delete
+• DRL/DQL: select===> many forms
+• TCL: Commit, Rollback, save point
+• DCL: GRANT, REVOKE
+=====================================================================
+Data Defination Language (DDL): create, alter, drop, truncate, rename
+DML( Data Manipulation Language): insert, update, delete
+
+=====================================================================
+
+**** ESSENTIALS:*****
+> SHOW DATABASES;
+> Show tables;
+> DESCRIBE <table_name>;
+> COMMIT; // Save data parmanantly in db
+> SET autocommit=0;
+	By default commit=1
+	avoid autocommit in db
+> Rollback;
+
+
+
+
+
+*****CREATE *****
+> used to define the database structure schema
+> used to create a new table in SQL. 
+> The user has to give information like table name, column names, and their datatypes
+> CREATE DATABASE mydb;
+> CREATE SCHEMA mydb;
+
+> Data types
+1) Numeric: int
+2) String : varchar (0-255)
+3) Date: YYYY-MM-DD
+
+
+> CREATE DATABASE IF NOT EXISTS 
+
+
+> CREATE TABLE <<table name>>(col1 datatype(size), col2 datatype(size), -----);
+> CREATE TABLE Employee ( Emp_Id int(5), First_name varchar(30), Email varchar(10));
+
+
+
+=============================================================
+***INSERT INTO***
+> This command is used to insert data into the row of a table
+
+> INSERT INTO <<Table Name>> VALUES(Val1, Val2, Val3, -------);
+
+> INSERT INTO <<Table Name>> (Col1, Col2, Col3,-----) VALUES(Val1, Val2, Val3, -------);
+> INSERT INTO Employee VALUES(777, 'Sujit', 'Kumar', 9768876577);  // Method-1
+> INSERT INTO Employee VALUES(777, 'Sujit', 'Kumar', NULL);  // Method-2
+> INSERT INTO Employee(Emp Id , Surname Name , First Name , Mobile No ) VALUES(777, 'Kumar', 'Sujit',NULL);   // Method-3
+> NOTE: Writing COMMIT command is important for confirm the data to entered into the DB
+
+================================================================
+
+
+***TRUNCATE****
+> used to delete all the rows from the table and free the space containing the table
+> used to remove all rows from the table, but the structure of the table still exists.
+> Used to delete permanently only data from the table
+> Roll back of data is not  possible 
+> The Company HR wants to remove the details of all employees for new recruiter but wants to keep the table structure. The command they can use is as follows.
+> TRUNCATE TABLE table_name;
+> TRUNCATE TABLE Emp_info;
+
+=====================================================
+
+***DROP***
+> Used to remove tables and databases from RDBMS.
+> Used to remove an existing table along with its structure from the Database.
+> Used to drop complete table defination i.e data. structure
+> Roll back is not possible
+> DROP TABLE <table_name>;
+> DROP DATABASE mydb;
+> DROP SCHEMA mydb;
+
+=========================
+
+DELETE FROM (DML)
+> This command is used to remove one or more rows from a table.
+> The structure of the table still exists.
+> Works on data not on table
+> Roll back of data is possible  // set autocommit=0
+> set autocommit=0;
+> DELETE FROM <table_name>;
+> DELETE FROM Employees;  // commit;
+> DELETE FROM Employees WHERE mobile_no=9999XXXXXX;
+
+=======================================
+
+***ALTER**
+> Used to alter the structure of the database
+> Used to Add, Delete, Modify or Rename the database objects from existing table
+> The user needs to know the existing table name and can do add, delete or modify tasks easily.
+
+
+1) Add column from Existing Table
+> ALTER TABLE <table_name> ADD column_name datatype;
+> ALTER TABLE Emp_info ADD mobile_no  double(10);
+
+2) Delete columns from the existing table
+> ROLLBACK not possible // rollback work on DML command
+> ALTER TABLE <table_name>  DROP COLUMN  colunm_name
+> ALTER TABLE Emp_info  DROP COLUMN   Address;
+
+3) Modifying Existing column
+> Increase/ dercrease the size of the column
+> ALTER TABLE Emp_info MODIFY COLUMN  EName  VARCHAR (255);'
+> Increase size of the column possible
+> Decrease size of the column possible but need to clear exiting data from table
+> ALTER TABLE <table_name>  MODIFY COLUMN  colunm_name datatype (value to be modify)
+> Change the data type of the column
+> ALTER TABLE <table_name>  MODIFY COLUMN  colunm_name chage_ datatype (value)
+
+4) Rename the column
+> ALTER TABLE <table_name> RENAME COLUMN old_column TO new_column
+
+================================================
+
+***RENAME****
+> Change the name of table
+> RENAME TABLE Old_table_Name TO New_Table_Name;
+> RENAME TABLE employee TO EMP;
+
+
+=====================
